@@ -1,0 +1,2 @@
+export const offlineSupported=()=>false,offlineAccount=()=>null,forgetOfflineAccount=()=>{},rememberOfflineAccount=()=>{},validDownloads=async()=>({}),downloadChapter=async()=>{},removeDownload=async()=>{},chapterKey=(course,category)=>`${course}:${category}`;
+export async function loadCatalogs(){const r=await fetch(new URL('./data.json',import.meta.url));if(!r.ok)throw new Error('catalog');return {catalogs:[await r.json()],offline:false};}
