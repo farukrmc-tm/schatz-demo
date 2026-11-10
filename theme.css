@@ -481,3 +481,34 @@
 /* Three destination navigation */
 :root[data-theme] .bottom-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
 :root[data-theme] .bottom-nav>button{flex:1;min-width:0}
+
+/* Focused set journey */
+.focus-library{max-width:760px;margin-inline:auto}
+.focus-heading{margin:24px 0 26px}.focus-heading h1{font-size:clamp(28px,5vw,42px);line-height:1.16;margin:12px 0}.focus-heading p{color:var(--muted);margin:0;font-size:15px}
+.set-route{display:flex;gap:16px;overflow-x:auto;padding:10px 3px 16px;scrollbar-width:thin;position:relative}
+:root[data-theme] .route-stop{position:relative;flex:0 0 52px;height:44px;border:1px solid var(--line);border-radius:24px;background:var(--paper);color:var(--ink);font-size:17px;display:flex;align-items:center;justify-content:center;gap:4px}
+.route-stop:not(:last-child):after{content:'';position:absolute;left:100%;width:17px;height:1px;background:var(--line)}
+:root[data-theme] .route-stop.is-selected{background:#244438;border-color:#244438;color:#fff}
+.route-stop .i{width:13px;height:13px;color:#9d8045}
+.focus-stage{position:relative;margin-top:12px;padding:0 25px;touch-action:pan-y}
+:root[data-theme] .focus-panel{padding:22px 24px 26px;border:1px solid #bcaa865e;border-radius:28px;background:linear-gradient(155deg,#fffdf7,#eee8da);text-align:center;box-shadow:0 12px 30px #3c352309}
+.focus-art{height:185px;display:flex;align-items:center;justify-content:center}
+.focus-art img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
+.focus-set-label{font-size:12px;letter-spacing:.15em;color:var(--muted);margin:14px 0}
+.focus-panel h2{font-size:clamp(24px,4vw,34px);margin:12px 0 8px;font-weight:600;line-height:1.2}
+.focus-word-count{font-size:15px;color:var(--muted);margin:0}
+.focus-word-chips{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:20px 0}
+.focus-word-chips span{font-size:13px;font-weight:400;line-height:1.4;padding:7px 12px;background:#6e855714;border-radius:12px;max-width:100%;overflow-wrap:break-word}
+:root[data-theme] .focus-open{width:100%;background:#244438;color:#fffaf0;border:0;border-radius:15px;box-shadow:none;min-height:52px;font-size:17px;display:flex;align-items:center;justify-content:center;gap:12px}
+:root[data-theme] .focus-step{position:absolute;top:48%;z-index:1;display:grid;place-items:center;width:40px;height:40px;border:1px solid var(--line);border-radius:50%;background:var(--paper);color:var(--ink);box-shadow:0 3px 8px #00000008}
+.focus-step.previous{left:0}.focus-step.next{right:0}.focus-step:disabled{opacity:.25;cursor:default}
+.focus-swipe-note{text-align:center;font-size:11px;color:var(--muted);margin:17px 0 24px}
+.focus-all{border:1px solid var(--line);border-radius:17px;padding:0 18px}
+.focus-all summary{display:flex;align-items:center;gap:12px;cursor:pointer;min-height:64px;font-weight:600;list-style:none}
+.focus-all summary::-webkit-details-marker{display:none}.focus-all summary>span{margin-left:auto;font-size:12px;color:var(--muted);font-weight:400}
+.focus-all>div{padding-bottom:10px}.focus-all>div>button{display:flex;align-items:center;gap:14px;width:100%;padding:15px 4px;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);text-align:left}.focus-all>div>button span{font-size:13px;color:var(--muted)}.focus-all>div>button .i{margin-left:auto}
+.focus-library button:focus-visible,.focus-all summary:focus-visible,.focus-stage:focus-visible{outline:3px solid #ad9363;outline-offset:4px}
+:root[data-theme="dark"] .focus-panel{background:linear-gradient(150deg,#293e34,#1e2e28);border-color:#68755c}
+:root[data-theme="dark"] .focus-art img{mix-blend-mode:normal}
+:root[data-theme="dark"] .route-stop.is-selected,:root[data-theme="dark"] .focus-open{background:#b9cda8;color:#182d22}
+@media(max-width:420px){.focus-stage{padding:0 16px}:root[data-theme] .focus-panel{padding:16px 18px 20px;border-radius:24px}.focus-art{height:155px}.focus-step.previous{left:-4px}.focus-step.next{right:-4px}:root[data-theme] .focus-step{width:34px;height:38px}.set-route{gap:12px}.route-stop:not(:last-child):after{width:13px}.focus-heading{margin-top:18px}}
