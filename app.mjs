@@ -2,7 +2,7 @@ import {buildParts,groupProgress,courseHome,coursePath,courseTopics} from './jou
 import {createLearningRound,takeLearningWord,recordLearningAnswer,lessonShareText} from './study.mjs?v=38';
 import {CloudProgress,seedOperations,applyOperation} from './sync.mjs?v=38';
 import {normalize,shuffle,shuffleMatchColumns,displayTerm,makeDeck,nextMatchId,makeQuestion,dayKey,getStreak,newProgress,recordAnswer,buildLessons,lessonProgress,curriculumState,lessonRoute,resolveLessonRoute} from './core.mjs?v=38';
-import {ratingLabels,ratingSummary,focusIds} from './practice.mjs?v=39';
+import {ratingLabels,ratingSummary,focusIds,reviewQueue} from './practice.mjs?v=39';
 import {offlineSupported,offlineAccount,forgetOfflineAccount,rememberOfflineAccount,validDownloads,downloadEverything,removeEverything,downloadChapter,removeDownload,chapterKey,loadCatalogs} from './offline.mjs?v=46';
 const paths={
  edit:'m16 3 5 5-12 12-6 1 1-6ZM14 5l5 5',
