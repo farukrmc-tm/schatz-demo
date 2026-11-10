@@ -1,4 +1,4 @@
-import {buildParts,groupProgress,courseHome,coursePath,courseTopics,selectPathSet} from './journey-ui.mjs?v=42';
+import {buildParts,groupProgress,courseHome,coursePath,courseTopics} from './journey-ui.mjs?v=43';
 import {createLearningRound,takeLearningWord,recordLearningAnswer,lessonShareText} from './study.mjs?v=38';
 import {CloudProgress,seedOperations,applyOperation} from './sync.mjs?v=38';
 import {normalize,shuffle,shuffleMatchColumns,displayTerm,makeDeck,nextMatchId,makeQuestion,dayKey,getStreak,newProgress,recordAnswer,buildLessons,lessonProgress,curriculumState,lessonRoute,resolveLessonRoute} from './core.mjs?v=38';
@@ -420,8 +420,6 @@ async function manageDownload(category,remove=false){
 
 async function clickAction(e){const el=e.target.closest('[data-action]');if(!el||el.disabled)return;const a=el.dataset.action,id=el.dataset.id;
  switch(a){
- case 'path-select':choosePathSet(id);break;
- case 'path-step':stepPathSet(Number(el.dataset.offset));break;
   case 'word-chip':wordFilter=id;visible=40;refreshList();break;
  case 'review-start':config={mode:'flash',scope:'review',target:0,direction:'de-tr',limit:'all'};startSession();break;
  case 'theme':progress.settings.theme=el.dataset.value;cloud?.meta('theme',el.dataset.value);persist();applyTheme();settings();break;
@@ -466,19 +464,3 @@ try{
  window.addEventListener('online',async()=>{if(offlineCatalog){try{const loaded=await loadCatalogs();if(!loaded.offline){offlineCatalog=false;courses[0].data=loaded.catalogs[0];DATA=courses[0].data;byId=new Map(DATA.words.map(w=>[w.id,w]));}}catch{}}if(!session&&!modalRoot.children.length)render();});
 }catch(e){root.innerHTML=`<div class="loading"><img class="schatz-logo" src="./schatz-logo.png" alt="Schatz" width="170" height="78"><p>Kelimeler yüklenemedi. Bağlantını kontrol edip yeniden dene.</p><button class="primary" onclick="location.reload()">Yeniden dene</button></div>`;console.error(e);}
 
-function choosePathSet(id){
- if(view!=='path')return;
- const {unit}=pathSelection();if(!unit.lessons.some(l=>l.id===id))return;
- selectPathSet(unit.id,id);const top=window.scrollY;render();window.scrollTo(0,top);
- const stop=document.querySelector('.route-stop.is-selected'),route=stop?.parentElement;
- if(route)route.scrollLeft=Math.max(0,stop.offsetLeft-route.offsetLeft-route.clientWidth/2+stop.clientWidth/2);
-}
-function stepPathSet(offset){
- if(view!=='path')return;const {unit}=pathSelection(),index=Number(document.querySelector('.focus-stage')?.dataset.index);
- const next=unit.lessons[index+offset];if(next)choosePathSet(next.id);
-}
-let pathTouch=null;
-document.addEventListener('touchstart',e=>{const stage=e.target.closest('.focus-stage');pathTouch=stage?{x:e.touches[0].clientX,y:e.touches[0].clientY}:null;},{passive:true});
-document.addEventListener('touchend',e=>{if(!pathTouch)return;const t=e.changedTouches[0],dx=t.clientX-pathTouch.x,dy=t.clientY-pathTouch.y;pathTouch=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)stepPathSet(dx<0?1:-1);},{passive:true});
-document.addEventListener('touchcancel',()=>{pathTouch=null;},{passive:true});
-document.addEventListener('keydown',e=>{if(e.target.matches('.focus-stage')&&['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();stepPathSet(e.key==='ArrowRight'?1:-1);document.querySelector('.focus-stage')?.focus({preventScroll:true});}});
