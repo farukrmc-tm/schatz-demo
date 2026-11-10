@@ -1,0 +1,61 @@
+/* Listening and sentence dictation */
+.dictation-session{max-width:760px}
+.dictation-session .session-title{margin:0 auto 22px;max-width:680px}
+.dictation-session .session-title h1{letter-spacing:-.7px}
+.dictation-card{padding:22px;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 10px 28px color-mix(in srgb,var(--ink) 5%,transparent)}
+.dictation-card-top,.dictation-progress-label{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.dictation-card-top .eyebrow{color:var(--muted)}
+.dictation-counter{padding:6px 10px;border-radius:999px;background:var(--surface-soft);color:var(--accent);font-size:12px;font-weight:800;font-variant-numeric:tabular-nums}
+.dictation-counter span{color:var(--muted);font-weight:600}
+.dictation-audio-controls{display:flex;align-items:center;gap:10px;margin-top:20px}
+.dictation-play{flex:1;justify-content:center;gap:9px;min-height:54px}
+.dictation-play .i{width:19px;height:19px}
+.dictation-slow{min-height:50px;min-width:64px;font-size:13px;font-weight:800}
+.dictation-audio-controls .icon-btn{width:50px;height:50px;border-radius:15px}
+.dictation-hint{display:flex;align-items:center;gap:7px;margin:14px 0 0;color:var(--muted);font-size:12px}
+.dictation-hint .i{width:15px;height:15px;flex:none}
+.dictation-progress{margin:19px 2px 0}
+.dictation-progress-label{color:var(--muted);font-size:12px;font-weight:700;font-variant-numeric:tabular-nums}
+.dictation-track{height:7px;margin-top:9px;border-radius:99px;background:var(--surface-soft);overflow:hidden}
+.dictation-track>span{display:block;width:0;height:100%;border-radius:inherit;background:var(--good);transition:width .18s ease}
+.dictation-form{margin-top:24px}
+.dictation-form>label{font-size:13px;font-weight:800}
+.dictation-entry{position:relative;min-height:142px;border:1.5px solid var(--line);border-radius:19px;background:var(--surface);overflow:hidden;transition:border-color .16s,box-shadow .16s}
+.dictation-entry:focus-within{border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 13%,transparent)}
+.dictation-entry.is-correct{border-color:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 12%,transparent)}
+.dictation-entry.is-incorrect{border-color:var(--rose)}
+.dictation-live,.dictation-entry textarea{box-sizing:border-box;width:100%;min-height:142px;margin:0;padding:17px 18px;font:600 16px/1.8 Nunito,ui-rounded,system-ui,sans-serif;letter-spacing:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;tab-size:4}
+.dictation-live{position:absolute;inset:0;pointer-events:none;color:var(--ink);overflow:hidden}
+.dictation-entry textarea{position:relative;z-index:1;display:block;resize:vertical;border:0;outline:0;background:transparent;color:transparent;-webkit-text-fill-color:transparent;caret-color:var(--ink);overflow:auto}
+.dictation-entry textarea::selection{background:color-mix(in srgb,var(--good) 24%,transparent);color:transparent;-webkit-text-fill-color:transparent}
+.dictation-correct{color:var(--good);text-decoration-color:color-mix(in srgb,var(--good) 35%,transparent)}
+.dictation-error{color:var(--rose);text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--rose) 50%,transparent);text-decoration-thickness:1px;text-underline-offset:3px}
+.dictation-punctuation{color:var(--muted)}
+.dictation-placeholder{color:var(--muted);font-weight:500;opacity:.75}
+.dictation-form>.form-help{font-size:11px;line-height:1.7}
+.dictation-actions{display:flex;gap:10px;margin-top:17px}
+.dictation-actions>*{min-height:49px}
+.dictation-actions .dictation-check{min-width:180px;margin-left:auto}
+.dictation-form .written-feedback{margin-top:18px}
+.dictation-form .written-feedback h3{font-size:15px}
+.dictation-form .written-feedback>p{font-size:13px}
+.dictation-answer{color:var(--ink);font-weight:800}
+.dictation-session .match-foot{margin-top:20px}
+.dictation-session .session-exit{margin-top:20px}
+@media(max-width:760px){
+ .dictation-session .session-title{margin-bottom:18px}
+ .dictation-card{padding:17px;border-radius:20px}
+ .dictation-audio-controls{gap:8px;margin-top:17px}
+ .dictation-play{min-height:50px;font-size:13px}
+ .dictation-slow{min-width:52px;min-height:46px}
+ .dictation-audio-controls .icon-btn{width:46px;height:46px}
+ .dictation-entry,.dictation-live,.dictation-entry textarea{min-height:158px}
+ .dictation-live,.dictation-entry textarea{padding:15px;font-size:16px;line-height:1.75}
+ .dictation-actions{flex-direction:column-reverse}
+ .dictation-actions .dictation-check{width:100%;margin:0}
+ .dictation-actions .wide{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.dictation-track>span,.dictation-entry{transition:none}}
+
+:root[data-theme] .insights-grid{grid-template-columns:minmax(0,1fr)}
+.dictation-play.is-playing{filter:saturate(.8);box-shadow:0 0 0 4px color-mix(in srgb,var(--good) 20%,transparent),0 3px 0 var(--forest)}
