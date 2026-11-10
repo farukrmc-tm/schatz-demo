@@ -55,3 +55,18 @@ export async function removeDownload(account,course,category){
  delete items[key];localStorage.setItem(META,JSON.stringify(items));return validDownloads();
 }
 if(offlineSupported())navigator.serviceWorker.register(url('sw.js'),{scope:base.pathname}).catch(()=>{});
+
+export async function downloadEverything(onProgress=()=>{}){
+ await workerReady();const cache=await caches.open(CACHE);
+ onProgress(0,'Uygulama dosyaları hazırlanıyor');await shell(cache);
+ const response=await cacheFile(cache,url('data.json'));catalog=await response.json();
+ const images=[...catalog.sources.map(s=>url('illustrations/category-'+s.id+'.webp')),...catalog.categories.map(c=>url('illustrations/topics/'+c.id.replace('.','-')+'.webp')),url('icon-192.png'),url('icon-512.png')];
+ const sizes=new Map();
+ for(let i=0;i<images.length;i++){const r=await cacheFile(cache,images[i]);sizes.set(images[i],(await r.blob()).size);onProgress(Math.round((i+1)/images.length*95),'Kelimeler ve görseller indiriliyor');}
+ const items={};
+ for(const c of catalog.categories){const image=url('illustrations/topics/'+c.id.replace('.','-')+'.webp');items[chapterKey('testdaf',c.id)]={course:'testdaf',category:c.id,title:c.title,image,bytes:sizes.get(image)||0,downloadedAt:new Date().toISOString()};}
+ localStorage.setItem(META,JSON.stringify(items));
+ if(navigator.storage?.persist)await navigator.storage.persist().catch(()=>false);
+ onProgress(100,'Çevrimdışı kullanım hazır');return validDownloads();
+}
+export async function removeEverything(){await caches.delete(CACHE);localStorage.removeItem(META);return {};}
