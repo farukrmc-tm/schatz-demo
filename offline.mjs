@@ -8,7 +8,7 @@ let catalog=null;
 async function cacheFile(cache,address){const r=await fetch(address,{cache:'reload'});if(!r.ok)throw new Error('Download failed: '+address);await cache.put(address,r.clone());return r;}
 async function workerReady(){
  if(!offlineSupported())throw new Error('Offline unsupported');
- await navigator.serviceWorker.register(url('sw.js'),{scope:base.pathname});
+ await navigator.serviceWorker.register(url('sw.js?v=46'),{scope:base.pathname,updateViaCache:'none'});
  await navigator.serviceWorker.ready;
 }
 async function shell(cache){
@@ -54,7 +54,7 @@ export async function removeDownload(account,course,category){
  if(item)await (await caches.open(CACHE)).delete(item.image);
  delete items[key];localStorage.setItem(META,JSON.stringify(items));return validDownloads();
 }
-if(offlineSupported())navigator.serviceWorker.register(url('sw.js'),{scope:base.pathname}).catch(()=>{});
+if(offlineSupported())navigator.serviceWorker.register(url('sw.js?v=46'),{scope:base.pathname,updateViaCache:'none'}).catch(()=>{});
 
 export async function downloadEverything(onProgress=()=>{}){
  await workerReady();const cache=await caches.open(CACHE);
