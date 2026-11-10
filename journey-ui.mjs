@@ -41,30 +41,15 @@ export function courseTopics({part,state,icon}){
 }
 
 
-const focusedSets=new Map();
-export function selectPathSet(unitId,setId){focusedSets.set(unitId,setId);}
 export function coursePath({part,unit,state,icon,words=[],recent=null}){
- const items=unit.lessons,lookup=new Map(words.map(w=>[w.id,w]));
- const selected=items.find(l=>l.id===focusedSets.get(unit.id))||items.find(l=>l.id===recent)||items.find(l=>!state.byId.get(l.id).complete)||items[0];
- const index=items.indexOf(selected),done=state.byId.get(selected.id).complete;
- return `<section class="set-library focus-library" data-unit="${esc(unit.id)}">
- <div class="library-toolbar"><button class="back-link" data-action="open-part" data-id="${part.id}">${icon('back')} Tüm konular</button><span>SCHATZ / TESTDAF</span></div>
- <header class="focus-heading"><span class="eyebrow">${esc(part.title)}</span><h1>${esc(unit.title)}</h1><p>${unit.count} kelime · ${items.length} set</p></header>
- <nav class="set-route" aria-label="Çalışma setleri">${items.map(l=>`<button class="route-stop ${l.id===selected.id?'is-selected':''} ${state.byId.get(l.id).complete?'is-complete':''}" data-action="path-select" data-id="${l.id}" aria-label="Set ${l.setNumber}${state.byId.get(l.id).complete?', tamamlandı':''}" aria-current="${l.id===selected.id?'step':'false'}">${l.setNumber}${state.byId.get(l.id).complete?icon('check'):''}</button>`).join('')}</nav>
- <div class="focus-stage" data-index="${index}" aria-roledescription="karusel" aria-label="Set seçimi" tabindex="0">
- <button class="focus-step previous" data-action="path-step" data-offset="-1" aria-label="Önceki set" ${index===0?'disabled':''}>${icon('back')}</button>
- <article class="focus-panel" data-selected="${selected.id}">
- <div class="focus-art">${topicArt(unit.id)}</div>
- <div class="focus-set-label" aria-live="polite">SET ${selected.setNumber} / ${items.length}</div>
- <h2>${done?'Bir kez daha keşfet':'Bir sonraki adım'}</h2><p class="focus-word-count">${selected.ids.length} kelime${done?' · Tamamlandı':''}</p>
- <div class="focus-word-chips">${selected.ids.slice(0,2).map(id=>`<span lang="de">${esc(lookup.get(id)?.de||'')}</span>`).join('')}</div>
- <button class="primary focus-open" data-action="lesson" data-id="${selected.id}">${done?'Tekrar çalış':'Seti aç'} ${icon('arrow')}</button>
- </article>
- <button class="focus-step next" data-action="path-step" data-offset="1" aria-label="Sonraki set" ${index===items.length-1?'disabled':''}>${icon('arrow')}</button>
- </div>
- <p class="focus-swipe-note">Set değiştirmek için kaydır veya numaraya dokun</p>
- <details class="focus-all"><summary>${icon('cards')} Tüm setler <span>${items.length} set</span>${icon('chevron')}</summary><div>${items.map(l=>`<button data-action="path-select" data-id="${l.id}" aria-label="Set ${l.setNumber} seç"><strong>Set ${l.setNumber}</strong><span>${l.ids.length} kelime</span>${icon(state.byId.get(l.id).complete?'check':'arrow')}</button>`).join('')}</div></details>
- </section>`;
+ const gp=groupProgress(unit,state),items=unit.lessons,lookup=new Map(words.map(w=>[w.id,w]));
+ const last=items.find(l=>l.id===recent&&!state.byId.get(l.id).complete),current=last||items.find(l=>!state.byId.get(l.id).complete);
+ return `<section class="set-library"><div class="library-toolbar"><button class="back-link" data-action="open-part" data-id="${part.id}">${icon('back')} Tüm konular</button><span>SCHATZ <i>/</i> TESTDAF</span></div>
+ <header class="library-hero"><div><span class="eyebrow">${esc(part.title)}</span><h1>${esc(unit.title)}</h1><p>${unit.count} kelime · ${items.length} set</p></div><div class="library-art">${topicArt(unit.id)}</div></header>
+ <div class="library-progress"><div class="progress-track" role="progressbar" aria-label="Konu ilerlemesi" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${gp.percent}"><span style="width:${gp.percent}%"></span></div><p>${gp.done} / ${items.length} set tamamlandı</p></div>
+ ${current?`<button class="library-resume" data-action="lesson" data-id="${current.id}"><span><small>${last?'KALDIĞIN YERDEN':'KEŞFETMEYE DEVAM'}</small><strong>Set ${String(current.setNumber).padStart(2,'0')}</strong><span>${current.ids.length} kelime</span></span><span class="library-resume-cta">${last?'Devam et':'Başla'} ${icon('arrow')}</span></button>`:''}
+ <div class="library-heading"><h2>Kelime setlerin</h2><span>${items.length} set</span></div><div class="lesson-list">${items.map(l=>{const st=state.byId.get(l.id),active=l.id===current?.id;return `<button class="lesson-row ${st.complete?'is-done':active?'is-current':''}" data-action="lesson" data-id="${l.id}" aria-label="Set ${l.setNumber}, ${l.ids.length} kelime${st.complete?', tamamlandı':''}"><span class="lesson-number">${st.complete?icon('check'):String(l.setNumber).padStart(2,'0')}</span><span class="lesson-copy"><span class="lesson-row-heading"><strong>Set ${l.setNumber}</strong><small>${l.ids.length} kelime</small></span><span class="lesson-preview" lang="de">${l.ids.slice(0,2).map(id=>esc(lookup.get(id)?.de||'')).join(' · ')}</span><span class="lesson-status">${st.complete?'Tamamlandı':active?'Buradan devam et':'Çalışmaya hazır'}</span></span><span class="lesson-arrow">${icon('arrow')}</span></button>`;}).join('')}</div>
+ ${gp.complete?`<div class="library-complete">${icon('check')} Bu konudaki tüm setleri tamamladın.<button class="link-btn" data-action="unit-picker">Tüm konular ${icon('arrow')}</button></div>`:''}</section>`;
 }
 
 export function courseHome({parts,state,icon,sync,reviewCount=0,savedCount=0,recent=null}){
