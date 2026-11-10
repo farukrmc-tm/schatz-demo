@@ -1,4 +1,4 @@
-import {buildParts,groupProgress,courseHome,coursePath,courseTopics} from './journey-ui.mjs?v=38';
+import {buildParts,groupProgress,courseHome,coursePath,courseTopics} from './journey-ui.mjs?v=40';
 import {createLearningRound,takeLearningWord,recordLearningAnswer,lessonShareText} from './study.mjs?v=38';
 import {CloudProgress,seedOperations,applyOperation} from './sync.mjs?v=38';
 import {normalize,shuffle,shuffleMatchColumns,displayTerm,makeDeck,nextMatchId,makeQuestion,dayKey,getStreak,newProgress,recordAnswer,buildLessons,lessonProgress,curriculumState,lessonRoute,resolveLessonRoute} from './core.mjs?v=38';
