@@ -455,3 +455,25 @@
 }
 
 [data-action="downloads"]{display:none!important}
+
+/* Compact set list */
+.lesson-list{display:grid;gap:10px;padding-bottom:16px}
+:root[data-theme] .lesson-row{display:flex;align-items:center;gap:16px;width:100%;padding:20px;text-align:left;background:var(--surface,#fffaf3);color:var(--text,#293c35);border:1px solid #c5b99f55;border-radius:18px;box-shadow:none;transition:background .18s,transform .18s}
+:root[data-theme] .lesson-row.is-current{background:#ece4d5;border-color:#b89b73}
+.lesson-number{display:grid;place-items:center;flex:0 0 42px;height:42px;border-radius:50%;background:#b49b7720;color:#8b6847;font-size:16px;font-weight:600}
+.lesson-copy{flex:1;min-width:0;display:grid;gap:6px}
+.lesson-row-heading{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.lesson-row-heading strong{font-size:20px;font-weight:600}
+.lesson-row-heading small{font-size:13px;color:var(--muted,#788077)}
+.lesson-preview{font-size:14px;line-height:1.5;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--muted,#788077);font-weight:400}
+.lesson-status{font-size:11px;color:#8b6847;font-weight:500}
+.lesson-arrow{flex:0 0 22px;color:#8b6847}.lesson-arrow .i{width:20px;height:20px}
+.lesson-row.is-done .lesson-number{background:#4a886318;color:#397650}
+.lesson-row:focus-visible{outline:3px solid #b69a72;outline-offset:3px}
+.lesson-row:active{transform:scale(.99)}
+:root[data-theme="dark"] .lesson-row{background:#24362e;border-color:#4b5d50;color:#f4efdf}
+:root[data-theme="dark"] .lesson-row.is-current{background:#33473b;border-color:#a88d62}
+:root[data-theme="dark"] .lesson-number,:root[data-theme="dark"] .lesson-status,:root[data-theme="dark"] .lesson-arrow{color:#d9bc8e}
+.home-shortcuts{align-content:start}
+@media(max-width:480px){:root[data-theme] .lesson-row{padding:16px 14px;gap:12px}.lesson-row-heading strong{font-size:18px}.lesson-number{flex-basis:36px;height:36px}.lesson-preview{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.lesson-row{transition:none}}
