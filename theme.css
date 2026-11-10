@@ -477,3 +477,7 @@
 .home-shortcuts{align-content:start}
 @media(max-width:480px){:root[data-theme] .lesson-row{padding:16px 14px;gap:12px}.lesson-row-heading strong{font-size:18px}.lesson-number{flex-basis:36px;height:36px}.lesson-preview{font-size:13px}}
 @media(prefers-reduced-motion:reduce){.lesson-row{transition:none}}
+
+/* Three destination navigation */
+:root[data-theme] .bottom-nav{grid-template-columns:repeat(3,minmax(0,1fr))}
+:root[data-theme] .bottom-nav>button{flex:1;min-width:0}
